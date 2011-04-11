@@ -10,7 +10,6 @@ class ProjectsController < ApplicationController
     if params[:sort_tasks]
       render :action => 'sort_tasks'
     end
-    
   end
   
   def new
@@ -20,10 +19,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(params[:project])
     if @project.save
-      respond_to do |format|
-        format.html {redirect_to @project}
-        format.js
-      end
+      redirect_to @project
     else
       render :action => 'new'
     end
