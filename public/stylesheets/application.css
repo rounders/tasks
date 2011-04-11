@@ -39,7 +39,8 @@ li {
 }
 
 #nav {
-	width: 300px;
+	max-width: 400px;
+	min-width: 300px;
 	background: #eeeeee;
 	padding: 15px 10px 15px 10px;
 	border: 1px solid black;
@@ -66,4 +67,15 @@ li {
 	height: 60px;
 	top: 5px;
 	left: 150px;
+}
+
+#my-projects-link {
+	padding-right: 15px;
+ 		
+}
+
+#done-reordering {
+	background: yellow;
+	padding: 2px;
+	color: red;
 }

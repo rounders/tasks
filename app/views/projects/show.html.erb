@@ -1,5 +1,5 @@
 <div id="nav">
-	<%= link_to 'My Projects', projects_path %>
+	<%= link_to 'My Projects', projects_path, :id => 'my-projects-link' %>
 	this project: <%= link_to 'edit', edit_project_path(@project) %> |
 	<%= link_to 'reorder', sort_tasks_path(@project) %>
 </div>	
