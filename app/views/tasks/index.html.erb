@@ -1,0 +1,7 @@
+<h1>Tasks</h1>
+
+<ul>
+	<% for task in @tasks %>
+	<li><%= task.description %> (Project ID: <%= task.project_id %>)</li>
+	<% end %>
+</ul>	

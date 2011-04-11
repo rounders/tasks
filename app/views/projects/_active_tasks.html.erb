@@ -1,0 +1,15 @@
+<ul id="active-tasks-list" class="<%= params[:sort_tasks] ? 'sortable' : ''%>">
+	<% for task in @project.tasks.active %>
+	<%= content_tag_for(:li, task) do %>
+		<% if params[:sort_tasks] %>
+			<%= image_tag 'drag.gif', :class => 'handle' %>
+		<% else %>
+			<% if !task.completed? %>
+			<%= check_box_tag 'completed_tasks[]', task.id, false, :id => "activetask-#{task.id}" %>
+			<% end %>
+		<% end %>
+		<%= task.description %> 
+    <% end %>
+	<% end %>
+</ul>
+

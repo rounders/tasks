@@ -1,0 +1,20 @@
+#user_nav {
+	text-align: right;
+	width: 100%;
+}
+
+.notice {
+	color: green;
+	background: #eeeeee;
+	padding: 5px 0 5px 0;
+}
+
+.alert {
+	color: green;
+	background: #eeeeee;
+	padding: 5px 0 5px 0;
+}
+
+li {
+	list-style: none;
+}

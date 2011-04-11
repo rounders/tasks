@@ -16,7 +16,28 @@
 	<%= f.label :name %>
 	<%= f.text_field :name %>
 </p>
+
+<h2>Tasks</h2>
+
+<% f.fields_for :tasks do |task_form| %>
+<p>
+	<div>
+		<%= task_form.label :description, 'Task:' %>
+		<%= task_form.text_field :description %>
+		<%= link_to image_tag('grey_delete.gif'), project_task_path(@project,task_form.object), :method => :delete, :remote => true %>
+	</div>
+
+	<% unless task_form.object.new_record? %>
+	<div>
+		<%= task_form.label :_destroy, 'Remove:' %>
+		<%= task_form.check_box :_destroy %>
+	</div>
+	<% end %>
+</p>
+<% end %>
+
+
 	
-<%= f.submit %>	
+<%= f.submit %>	or <%= link_to 'Cancel', :back %>
 	
 <% end %>
