@@ -41,33 +41,17 @@ class TasksController < ApplicationController
   end
   
  
-  
-  def destroy
-    @task = @project.tasks.find(params[:id])
-    if @task.destroy
-      flash.now[:notice] = "Task successfully removed"
-      respond_to do |format|
-        format.html {  redirect_to project_path(@project) }
-        format.js
-      end
-    else
-      flash[:notice] = "Could not remove the task for some strange reason"
-      respond_to do |format|
-        format.html {  redirect_to project_path(@project) }
-        format.js { render :status => 500 }
-      end
-      
-    end
-    
-    
-    
-   
-  end
-  
   def toggle_task
     @task = Task.find(params[:id])
     @project = @task.project
     @task.toggle!(:completed)
+    if @task.completed_was.blank?
+      @task.update_attribute(:position_position, :last)
+    else
+      @task.update_attribute(:position_position, :first)
+    end
+    
+
     # if we are adding to the completed list then always put the item as the first item on that
     # list
     

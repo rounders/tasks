@@ -1,6 +1,18 @@
+body {
+  margin: 0 auto;
+  padding: 70px 30px 0 30px;
+  font-family: "Lucida Grande", verdana, arial, helvetica, sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+
 #user_nav {
 	text-align: right;
 	width: 100%;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	z-index: 1000;
 }
 
 .notice {
@@ -17,4 +29,41 @@
 
 li {
 	list-style: none;
+	line-height: 1.3em;
+	padding-bottom: 4px;
+	vertical-align: top;
+}
+
+#completed_tasks li {
+	color: #999;
+}
+
+#nav {
+	width: 300px;
+	background: #eeeeee;
+	padding: 15px 10px 15px 10px;
+	border: 1px solid black;
+	-moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+}
+
+#top_bar {
+	position:fixed;
+	height: 60px;
+	padding: 0 0 0 10px;
+	top:0;
+	left:0;
+	width:100%;
+	background:#eeeeee;
+	opacity:0.4;
+	border-bottom: 1px solid black;
+}
+
+#flash {
+	position: fixed;
+	height: 60px;
+	top: 5px;
+	left: 150px;
 }

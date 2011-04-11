@@ -1,5 +1,5 @@
 <div id="nav">
-	<%= link_to 'Projects', projects_path %>
+	<%= link_to 'My Projects', projects_path %>
 	this project: <%= link_to 'edit', edit_project_path(@project) %> |
 	<%= link_to 'reorder', sort_tasks_path(@project) %>
 </div>	
@@ -10,13 +10,14 @@
 	<%= render :partial => "active_tasks" %>
 </div>
 
-<div id="completed_tasks">
-	<%= render :partial => "completed_tasks" %>
+<div>
+	<p>
+		<%= link_to 'new task', new_project_task_path(@project), :remote => true %>
+	</p>
+	<div id="new_task_form"></div>	
 </div>
 
-<div>
-	<p><%= link_to 'new task', new_project_task_path(@project), :remote => true %></p>
-	<div id="new_task_form"></div>	
-	<%= link_to 'close','#', :id => 'close_new_task_link', :style => 'display:none' %>
+<div id="completed_tasks">
+	<%= render :partial => "completed_tasks" %>
 </div>
 

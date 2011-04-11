@@ -16,8 +16,8 @@
 
 <p>
 	<%= f.label :description %>
-	<%= f.text_field :description %>
+	<%= f.text_field :description, :size => 60 %>
 </p>	
 
-<%= f.submit %>
+<%= f.submit %> <%= link_to 'close','#', :id => 'close_new_task_link', :style => 'display:none' %>
 <% end %>	

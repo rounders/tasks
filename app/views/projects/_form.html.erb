@@ -17,7 +17,9 @@
 	<%= f.text_field :name %>
 </p>
 
+<% unless @project.new_record? %>
 <h2>Tasks</h2>
+<% end %>
 
 <%= f.fields_for :tasks do |task_form| %>
 	<% next if task_form.object.completed == true %>

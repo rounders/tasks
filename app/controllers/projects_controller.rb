@@ -1,10 +1,12 @@
 class ProjectsController < ApplicationController
+  before_filter :authenticate_user!
+  
   def index
-    @projects = Project.all
+    @projects = current_user.projects.all
   end
   
   def show
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
     if params[:sort_tasks]
       render :action => 'sort_tasks'
     end
@@ -12,14 +14,14 @@ class ProjectsController < ApplicationController
   end
   
   def new
-    @project = Project.new
+    @project = current_user.projects.new
   end
   
   def create
-    @project = Project.new(params[:project])
+    @project = current_user.projects.new(params[:project])
     if @project.save
       respond_to do |format|
-        format.html {redirect_to projects_path, :notice => "Project successfully created"}
+        format.html {redirect_to @project}
         format.js
       end
     else
@@ -28,20 +30,20 @@ class ProjectsController < ApplicationController
   end
   
   def edit
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
   end
   
   def update
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
     if @project.update_attributes(params[:project])
-      redirect_to @project, :notice => "Project successfully updated"
+      redirect_to @project
     else
       render :action => 'edit'
     end
   end
   
   def destroy
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find(params[:id])
     if @project.destroy
       flash[:notice] = "Project #{@project.name} has been sent to the garbage can."
     else
@@ -50,11 +52,4 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
   
-  def sort_tasks
-    @project = Project.find(params[:id])
-    params[:tasks].each_with_index do |task_id,index|
-      @project.tasks.find(task_id).update_attribute(:position_position,index)
-    end
-    render :nothing => true
-  end
 end

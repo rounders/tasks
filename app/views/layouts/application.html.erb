@@ -18,13 +18,17 @@
 </div>
 
 
-
+<div id="top_bar">
+	<h2>Projects</h2>
+	<div id="flash">
 <% if flash[:notice] %>
  <p class="notice"><%= notice %></p>
 <% end %>
 <% if flash[:alert] %>
 <p class="alert"><%= alert %></p>
 <% end %>
+	</div>
+</div>
 
 <%= yield %>
 

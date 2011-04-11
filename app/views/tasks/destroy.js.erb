@@ -1,6 +1,0 @@
-$('#task_'+<%= @task.id %>).effect("highlight", {}, 400);
-
-
-$('#task_'+<%= @task.id %>).fadeToggle("fast", function () {
-	$('#task_<%= @task.id %>').remove();
-});
