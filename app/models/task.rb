@@ -7,7 +7,11 @@ class Task < ActiveRecord::Base
   
   ranks :position, :with_same => :project_id
 
-
+  # default_scope where("completed IS NOT ?",true).order('position')
+  #  
+  #  def self.completed
+  #    with_exclusive_scope {}
+  #  end
   
   
 end

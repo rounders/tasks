@@ -44,14 +44,24 @@ class TasksController < ApplicationController
   
   def destroy
     @task = @project.tasks.find(params[:id])
-    if @task
-      flash[:notice] = "Task successfully removed"
+    if @task.destroy
+      flash.now[:notice] = "Task successfully removed"
+      respond_to do |format|
+        format.html {  redirect_to project_path(@project) }
+        format.js
+      end
     else
       flash[:notice] = "Could not remove the task for some strange reason"
+      respond_to do |format|
+        format.html {  redirect_to project_path(@project) }
+        format.js { render :status => 500 }
+      end
+      
     end
     
-    redirect_to project_path(@project)
     
+    
+   
   end
   
   def toggle_task

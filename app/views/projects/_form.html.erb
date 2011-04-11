@@ -19,20 +19,17 @@
 
 <h2>Tasks</h2>
 
-<% f.fields_for :tasks do |task_form| %>
+<%= f.fields_for :tasks do |task_form| %>
+	<% next if task_form.object.completed == true %>
 <p>
-	<div>
+	<%= div_for task_form.object, :class => 'fields' do %>
 		<%= task_form.label :description, 'Task:' %>
 		<%= task_form.text_field :description %>
-		<%= link_to image_tag('grey_delete.gif'), project_task_path(@project,task_form.object), :method => :delete, :remote => true %>
-	</div>
+		<%= task_form.hidden_field :_destroy %>  
+		<%= link_to_function image_tag('grey_delete.gif'), "remove_fields(this)" %>
+    <% end %>
 
-	<% unless task_form.object.new_record? %>
-	<div>
-		<%= task_form.label :_destroy, 'Remove:' %>
-		<%= task_form.check_box :_destroy %>
-	</div>
-	<% end %>
+
 </p>
 <% end %>
 

@@ -11,10 +11,7 @@
 </div>
 
 <div id="completed_tasks">
-	<% if @project.tasks.completed.size > 0 %>
-	<h2>Completed</h2>
 	<%= render :partial => "completed_tasks" %>
-	<% end %>
 </div>
 
 <div>

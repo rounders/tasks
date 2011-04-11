@@ -1,3 +1,7 @@
+<% if @project.tasks.completed.size > 0 %>
+<h4>Completed</h4>
+<% end %>
+
 <ul>
 	<% for task in @project.tasks.completed %>
 	<li id="task_<%= task.id %>">
