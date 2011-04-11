@@ -21,6 +21,7 @@ $(function () {
   $('#close_new_task_link').live('click',function () {  
 	$('#new_task_form').empty();
 	$('#close_new_task_link').hide();
+	$('#new_task_link').show();
 	return false;  
 	
    })  
