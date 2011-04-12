@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :find_project, :except => :toggle_task
   
   def new
