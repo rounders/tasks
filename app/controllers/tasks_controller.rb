@@ -44,18 +44,18 @@ class TasksController < ApplicationController
   def toggle_task
     @task = Task.find(params[:id])
     @project = @task.project
-    @task.toggle!(:completed)
-    if @task.completed_was.blank?
-      @task.update_attribute(:position_position, :last)
-    else
-      @task.update_attribute(:position_position, :first)
+    
+    if @project.user != current_user
+      render :status => 500, :text => 'Not authorized'
+      return
     end
     
-
-    # if we are adding to the completed list then always put the item as the first item on that
-    # list
-    
-    # if we are adding to the active list we always add to the bottom
+    if @task.completed.blank?
+      @task.update_attributes(:completed => true, :position_position => :last)
+    else
+      @task.update_attributes(:completed => false, :position_position => :first)
+    end
+      
   end
   
   private

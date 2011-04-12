@@ -3,18 +3,21 @@
 
 $('input[type=checkbox]').live('click', function () {
 	task_id = this.value;
+
 	
 	$.ajax({
-	          type: "POST",
-	          url: '/toggle_task/'+task_id,
-	          data: { _method:'PUT'},
-	          dataType: 'script',
-			  success: function(){
-			    // alert("olo");
-			  }
-			  
+		type: "POST",
+		url: '/toggle_task/'+task_id,
+		data: { _method:'PUT'},
+		dataType: 'script',
+		success: function(){
+			// alert("olo");
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			$('#flash').html("<p class='alert'>The server reported an error: " +xhr.responseText+ "</p>");
+		}
 	});
-	// $(this).parent().hide();
+
 });
 
 $(function () {  

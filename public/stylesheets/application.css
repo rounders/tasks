@@ -69,6 +69,10 @@ li {
 	left: 150px;
 }
 
+#flash .alert {
+	color: red;
+}
+
 #my-projects-link {
 	padding-right: 15px;
  		
