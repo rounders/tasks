@@ -23,14 +23,11 @@ class TasksController < ApplicationController
         format.js { render :status => 500 }
       end
     end
-
-    
   end
   
   def create
     @task = @project.tasks.new(params[:task])
     if @task.save
-      @task.update_attribute(:position_position,  :last)
       respond_to do |format|
         format.html {redirect_to @project, :notice => 'task successfully created'}
         format.js
@@ -43,19 +40,12 @@ class TasksController < ApplicationController
  
   def toggle_task
     @task = Task.find(params[:id])
-    @project = @task.project
-    
-    if @project.user != current_user
+
+    if @task.project.user != current_user
       render :status => 500, :text => 'Not authorized'
-      return
-    end
-    
-    if @task.completed.blank?
-      @task.update_attributes(:completed => true, :position_position => :last)
     else
-      @task.update_attributes(:completed => false, :position_position => :first)
+      @task.toggle!(:completed)
     end
-      
   end
   
   private
