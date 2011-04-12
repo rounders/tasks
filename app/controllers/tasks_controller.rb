@@ -1,12 +1,20 @@
 class TasksController < ApplicationController
   before_filter :find_project, :except => :toggle_task
   
-  def index
-    @tasks = Task.all
-  end
-  
   def new
     @task = @project.tasks.new
+  end
+  
+  def create
+    @task = @project.tasks.new(params[:task])
+    if @task.save
+      respond_to do |format|
+        format.html {redirect_to @project, :notice => 'task successfully created'}
+        format.js
+      end
+    else
+      render :action => 'new'
+    end
   end
   
   def update
@@ -24,19 +32,6 @@ class TasksController < ApplicationController
       end
     end
   end
-  
-  def create
-    @task = @project.tasks.new(params[:task])
-    if @task.save
-      respond_to do |format|
-        format.html {redirect_to @project, :notice => 'task successfully created'}
-        format.js
-      end
-    else
-      render :action => 'new'
-    end
-  end
-  
  
   def toggle_task
     @task = Task.find(params[:id])
