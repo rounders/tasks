@@ -45,7 +45,7 @@ class ProjectTest < ActiveSupport::TestCase
     # lets set at least one of those tasks to be completed
     number_of_completed_tasks = number_of_tasks - rand(number_of_tasks) + 1
     number_of_completed_tasks.times do 
-      @project.tasks.where(:completed => false).sample.update_attribute(:completed,true)
+      @project.reload.tasks.where(:completed => false).sample.update_attribute(:completed,true)
     end
     
     assert @project.tasks.completed.count == number_of_completed_tasks
