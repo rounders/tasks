@@ -17,27 +17,12 @@ class TasksController < ApplicationController
       render :action => 'new'
     end
   end
-  
-  def update
-    @task = @project.tasks.find(params[:id])
-    if @task.update_attributes(params[:task])
-      flash.now[:notice] = 'task successfully updated'
-      respond_to do |format|
-        format.html 
-        format.js  { render :nothing => true }
-      end
-    else
-      respond_to do |format|
-        format.html {render :action => 'edit'}
-        format.js { render :status => 500 }
-      end
-    end
-  end
  
   def toggle_task
     @task = Task.find(params[:id])
-
-    if @task.project.user != current_user
+    @project = @task.project
+    
+    if @project.user != current_user
       render :status => 500, :text => 'Not authorized'
     else
       @task.toggle!(:completed)
