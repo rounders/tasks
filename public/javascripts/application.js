@@ -7,7 +7,7 @@ $('input[type=checkbox]').live('click', function () {
 	
 	$.ajax({
 		type: "POST",
-		url: '/toggle_task/'+task_id,
+		url: '/toggle_task_completed/'+task_id,
 		data: { _method:'PUT'},
 		dataType: 'script',
 		success: function(){

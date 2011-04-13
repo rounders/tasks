@@ -44,5 +44,20 @@ class TasksControllerTest < ActionController::TestCase
     task = @project.tasks.sample
   end
   
+  test "should toggle toggle attribute for a task" do
+    
+  end
+  
+  # def toggle_task
+  #    @task = Task.find(params[:id])
+  #    @project = @task.project
+  # 
+  #    if @project.user != current_user
+  #      render :status => 500, :text => 'Not authorized'
+  #    else
+  #      @task.toggle!(:completed)
+  #    end
+  #  end
+  
 
 end

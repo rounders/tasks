@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_project, :except => :toggle_task
+  before_filter :find_project, :except => :toggle_completed
   
   def new
     @task = @project.tasks.new
@@ -18,7 +18,7 @@ class TasksController < ApplicationController
     end
   end
  
-  def toggle_task
+  def toggle_completed
     @task = Task.find(params[:id])
     @project = @task.project
     
