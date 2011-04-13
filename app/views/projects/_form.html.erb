@@ -37,6 +37,6 @@
 
 
 	
-<%= f.submit %>	or <%= link_to 'Cancel', projects_path %>
+<%= f.submit %>	or <%= link_to 'Cancel', @project.new_record? ? projects_path : @project %>
 	
 <% end %>
