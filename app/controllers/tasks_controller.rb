@@ -17,6 +17,16 @@ class TasksController < ApplicationController
       render :action => 'new'
     end
   end
+
+  #  this update action is used only via ajax when sorting tasks
+  def update
+    @task = @project.tasks.find(params[:id])
+    if @task.update_attributes(params[:task])
+      flash.now[:notice] = 'task successfully updated'
+    else
+      format.js { render :status => 500 }
+    end
+  end
  
   def toggle_completed
     @task = Task.find(params[:id])
