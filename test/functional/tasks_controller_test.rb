@@ -42,6 +42,13 @@ class TasksControllerTest < ActionController::TestCase
   test "should update an existing task" do
     sign_in @user
     task = @project.tasks.sample
+    put :update, :format => 'js', :project_id => @project, :id => task.id, :task => { :description => 'blah blah'}
+    
+    assert_response :success
+    assert assigns(:project)
+    assert assigns(:task)
+    assert_equal assigns(:task).description, "blah blah"
+    assert_equal flash[:notice], "task successfully updated"
   end
   
   test "should toggle toggle attribute for a task" do

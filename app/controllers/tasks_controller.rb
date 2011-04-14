@@ -23,6 +23,7 @@ class TasksController < ApplicationController
     @task = @project.tasks.find(params[:id])
     if @task.update_attributes(params[:task])
       flash.now[:notice] = 'task successfully updated'
+      render :nothing => true
     else
       format.js { render :status => 500 }
     end
