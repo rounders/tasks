@@ -8,7 +8,7 @@ gem 'rails', '3.0.6'
 gem 'sqlite3'
 gem 'jquery-rails'
 gem 'devise'
-gem 'ranked-model'
+gem 'ranked-model', '0.0.2'
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -25,8 +25,11 @@ class TaskTest < ActiveSupport::TestCase
   end
   
   test "a new task should appear at the bottom of the active list" do
-    task = @project.tasks.create(:description => 'this should be at the bottom of the active tasks list')
-    assert @project.tasks.active.last == task
+    @new_project = Project.create(:name => 'A new Project')
+    (5 + rand(10)).times do |i|
+      task = @project.tasks.create(:description => "task #{i}")
+      assert @project.reload.tasks.active.last == task
+    end
   end
   
   test "an active task that is set to completed moves to the top of the completed list" do
