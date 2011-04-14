@@ -3,6 +3,7 @@ require 'test_helper'
 class TasksControllerTest < ActionController::TestCase
   def setup
     @user = User.create(:email => 'user@user.com', :password => 'abc123', :password_confirmation => 'abc123')
+    
     @project = @user.projects.create(:name => "My Project")
 
     # create 5 -  10 sample tasks
@@ -51,9 +52,48 @@ class TasksControllerTest < ActionController::TestCase
     assert_equal flash[:notice], "task successfully updated"
   end
   
-  test "should toggle toggle attribute for a task" do
+  test "should not update a task which does not belong to us" do
+    sign_in @user
+
+    @user2 = User.create(:email => 'user2@user.com', :password => 'abc123', :password_confirmation => 'abc123')
+    @project2 = @user2.projects.create(:name => 'My Project')
+    @task = @project2.tasks.create(:description => 'my task')
+    task = @project.tasks.sample
     
+    # using project_id belonging to @user2
+    assert_raise ActiveRecord::RecordNotFound do
+      put :update, :format => 'js', :project_id => @project2.id, :id => task.id, :task => {:description => 'blah blah'}
+    end
+    
+    # using project_id belonging to @user but task id belonging to @user2
+    assert_raise ActiveRecord::RecordNotFound do
+      put :update, :format => 'js', :project_id => @project.id, :id => @task.id, :task => {:description => 'blah blah'}
+    end
   end
+  
+  test "should toggle completed attribute for a task belonging to authenticated user" do
+    sign_in @user
+    
+    task = @project.tasks.sample
+    
+    put :toggle_completed, :id => task.id, :format => 'js'
+    assert_response :success
+    assert assigns(:task)
+    assert_equal task.completed, !assigns(:task).completed
+  end
+  
+  test "should not toggle completed attribute for a task not belonging to authenticated user" do
+    @user2 = User.create(:email => 'user2@user.com', :password => 'abc123', :password_confirmation => 'abc123')
+    sign_in @user2
+    
+    # a task that does not belong to @user2
+    task = @project.tasks.sample
+    
+    assert_raise ActiveRecord::RecordNotFound do
+      put :toggle_completed, :id => task.id, :format => 'js'
+    end
+  end
+  
   
   # def toggle_task
   #    @task = Task.find(params[:id])

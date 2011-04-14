@@ -34,7 +34,7 @@ class TasksController < ApplicationController
     @project = @task.project
     
     if @project.user != current_user
-      render :status => 500, :text => 'Not authorized'
+      raise ActiveRecord::RecordNotFound
     else
       @task.toggle!(:completed)
     end
@@ -43,7 +43,7 @@ class TasksController < ApplicationController
   private
   
   def find_project
-    @project = Project.find(params[:project_id])
+    @project = current_user.projects.find(params[:project_id])
   end
   
   

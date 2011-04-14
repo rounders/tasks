@@ -53,7 +53,7 @@ class ProjectsControllerTest < ActionController::TestCase
     assert_redirected_to assigns(:project)
   end
   
-  test "should display errors when trying to create a duplicate project" do
+  test "should display errors when trying to create a duplicate project for a given user" do
     sign_in @user
     project = Project.first
     post :create, :project => { :name => project.name }
