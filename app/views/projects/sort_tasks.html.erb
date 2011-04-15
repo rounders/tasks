@@ -9,26 +9,3 @@
 <%= render :partial => "active_tasks" %>
 
 
-<script>
-
-$(function() {
-		$( ".sortable" ).sortable({
-			 	handle: '.handle',  
-				cursor: 'crosshair',
-				axis: 'y',
-			    update: function(event, ui){
-				 	element_index = ui.item.index();
-					element_id = ui.item.attr('id');
-					task_id = element_id.split("_",2)[1];
-				 	$.ajax({
-						type: 'post',
-						data: {_method:'PUT', task:{'position_position':element_index}},
-						url: '/projects/<%= @project.id %>/tasks/'+task_id+'.js'
-					});
-				}
-	    });
-		$( ".sortable" ).disableSelection();
-});
-
-</script>
-

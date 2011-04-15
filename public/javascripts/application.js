@@ -18,7 +18,10 @@ $('input[type=checkbox]').live('click', function () {
 		}
 	});
 
-});
+});         
+
+
+
 
 
 $(function () {
@@ -45,7 +48,26 @@ $(function () {
 		$('#add-task').show();
 		toggle_delete_project_link();
 		return false;  
-	})  
+	});
+	
+	$( ".sortable" ).sortable({
+		handle: '.handle',  
+		cursor: 'crosshair',
+		axis: 'y',
+		update: function(event, ui){
+			project_id = $('ul#active-tasks-list').attr('data-project-id');
+			element_index = ui.item.index();
+			element_id = ui.item.attr('id');
+			task_id = element_id.split("_",2)[1];
+			$.ajax({
+				type: 'post',
+				data: {_method:'PUT', task:{'position_position':element_index}},
+				url: '/projects/' + project_id + '/tasks/'+task_id+'.js'
+			});
+		}
+	});
+	$( ".sortable" ).disableSelection();
+
 	
 	toggle_delete_project_link();
 });
