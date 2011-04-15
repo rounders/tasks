@@ -20,15 +20,38 @@ $('input[type=checkbox]').live('click', function () {
 
 });
 
-$(function () {  
-  $('#close_new_task_link').live('click',function () {  
-	$('#new_task_form').empty();
-	$('#close_new_task_link').hide();
-	$('#new_task_link').show();
-	return false;  
+$(function () {
+	$('#new_task_form').hide();
 	
-   })  
+	$('#new_task_link').live('click', function(event) {
+		event.preventDefault();
+		$('#new_task_form').show();
+
+		$("#close_new_task_link").show();
+		$("#task_description")[0].focus();
+
+		$('#add-task').hide();
+		toggle_delete_project_link();
+	});
+	
+	$('#close_new_task_link').live('click',function () {  
+		$('#new_task_form').hide();
+		$('#close_new_task_link').hide();
+		$('#add-task').show();
+		toggle_delete_project_link();
+		return false;  
+	})  
+	
+	toggle_delete_project_link();
 });
+
+function toggle_delete_project_link() {
+	if ( $('#active_tasks ul li').length > 0 ) {
+		$('#delete-project').hide();
+	} else {
+		$('#delete-project').show();
+	}
+}
 
 function remove_fields(link) {  
 	$(link).prev("input[type=hidden]").val("1");  
