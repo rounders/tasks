@@ -3,6 +3,7 @@ $('#task_'+<%= @task.id %>).fadeToggle("fast", function () {
 	$('#active_tasks').html("<%= escape_javascript(render(:partial => 'projects/active_tasks')) %>");
 	$('#completed_tasks').effect("highlight", {}, 1000);
 	$('#active_tasks').effect("highlight", {}, 1000);
+	toggle_delete_project_link();   
 });
 
 
