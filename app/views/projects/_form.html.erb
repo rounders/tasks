@@ -23,7 +23,7 @@
 
 <%= f.fields_for :tasks do |task_form| %>
 	<% next if task_form.object.completed == true %>
-<p>
+
 	<%= div_for task_form.object, :class => 'fields' do %>
 		<%= task_form.label :description, 'Task:' %>
 		<%= task_form.text_field :description %>
@@ -31,12 +31,11 @@
 		<%= link_to_function image_tag('grey_delete.gif', :border => 0), "remove_fields(this)" %>
     <% end %>
 
-
-</p>
 <% end %>
 
 
-	
+<p>	
 <%= f.submit %>	or <%= link_to 'Cancel', @project.new_record? ? projects_path : @project %>
+</p>
 	
 <% end %>
