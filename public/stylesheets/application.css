@@ -15,6 +15,10 @@ body {
 	z-index: 1000;
 }
 
+.fields {
+	padding-top: 15px;
+}
+
 .notice {
 	color: green;
 	background: #eeeeee;
