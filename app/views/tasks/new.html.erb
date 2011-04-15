@@ -1,3 +1,8 @@
-<h1>New Task</h1>
+<%= form_for [@project,Task.new], :remote => true do |f| %>
+<p>
+	<%= f.label :description %>
+	<%= f.text_field :description, :size => 60 %>
+</p>	
 
-<%= render :partial => "form" %>
+<%= f.submit %> <%= link_to 'close','#', :id => 'close_new_task_link', :style => 'display:none' %>
+<% end %>
