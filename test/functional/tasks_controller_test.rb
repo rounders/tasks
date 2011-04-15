@@ -19,16 +19,21 @@ class TasksControllerTest < ActionController::TestCase
     
     post :create, :project_id => @project, :task => { :description => 'my test project' }
     assert_redirected_to new_user_session_path
+    
+    put :toggle_completed, :id => @project.tasks.sample.id, :format => 'js'
+    assert_response :unauthorized
   end
   
+  # test GET /new
   test "should display new task form" do 
     sign_in @user
     get :new, :project_id => @project
     assert_response :success
     assert_select 'form#new_task'
   end
-  
-  test "should create new task" do
+
+  # 
+  test "should create new task (html)" do
     sign_in @user
     assert_difference('Task.count') do
       post :create, :project_id => @project, :task => { :description => 'my test project' }
@@ -38,6 +43,18 @@ class TasksControllerTest < ActionController::TestCase
     assert assigns(:task)
     assert_equal assigns(:task).description, 'my test project'
     assert_redirected_to project_path(assigns(:project))
+  end
+  
+  test "should create new task (js)" do
+    sign_in @user
+    assert_difference('Task.count') do
+      post :create, :project_id => @project, :task => { :description => 'my test project' }, :format => 'js'
+    end
+    
+    assert assigns(:project)
+    assert assigns(:task)
+    assert_equal assigns(:task).description, 'my test project'
+    assert_template "create"
   end
   
   test "should update an existing task" do
@@ -71,6 +88,7 @@ class TasksControllerTest < ActionController::TestCase
     end
   end
   
+  # test toggle_complete method with an authenticated user
   test "should toggle completed attribute for a task belonging to authenticated user" do
     sign_in @user
     
@@ -82,7 +100,8 @@ class TasksControllerTest < ActionController::TestCase
     assert_equal task.completed, !assigns(:task).completed
   end
   
-  test "should not toggle completed attribute for a task not belonging to authenticated user" do
+  # test toggle_complete method with an authenticated user who does not own the task
+  test "should not toggle completed attribute for a task not belonging to the authenticated user" do
     @user2 = User.create(:email => 'user2@user.com', :password => 'abc123', :password_confirmation => 'abc123')
     sign_in @user2
     
@@ -93,18 +112,5 @@ class TasksControllerTest < ActionController::TestCase
       put :toggle_completed, :id => task.id, :format => 'js'
     end
   end
-  
-  
-  # def toggle_task
-  #    @task = Task.find(params[:id])
-  #    @project = @task.project
-  # 
-  #    if @project.user != current_user
-  #      render :status => 500, :text => 'Not authorized'
-  #    else
-  #      @task.toggle!(:completed)
-  #    end
-  #  end
-  
 
 end
