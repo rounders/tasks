@@ -14,7 +14,10 @@ class TasksController < ApplicationController
         format.js
       end
     else
-      render :action => 'new'
+      respond_to do |format|
+        format.html { render :action => 'new' }
+        format.js { render :status => 500 }
+      end
     end
   end
 
