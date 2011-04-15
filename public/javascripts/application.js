@@ -20,8 +20,13 @@ $('input[type=checkbox]').live('click', function () {
 
 });
 
+
 $(function () {
 	$('#new_task_form').hide();
+	$('#new_task').bind('ajax:error', function(){
+		$("#task_description")[0].focus();
+	});
+	
 	
 	$('#new_task_link').live('click', function(event) {
 		event.preventDefault();
