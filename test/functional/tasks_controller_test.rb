@@ -22,6 +22,10 @@ class TasksControllerTest < ActionController::TestCase
     
     put :toggle_completed, :id => @project.tasks.sample.id, :format => 'js'
     assert_response :unauthorized
+    
+    put :toggle_completed, :id => @project.tasks.sample.id, :format => 'html'
+    assert_redirected_to new_user_session_path
+    
   end
   
   # test GET /new

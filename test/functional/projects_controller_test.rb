@@ -19,6 +19,9 @@ class ProjectsControllerTest < ActionController::TestCase
     
     post :create
     assert_redirected_to new_user_session_path
+    
+    put :update, :id => @user.projects.sample.id, :project => { }
+    assert_redirected_to new_user_session_path
   end
   
   test "should get index" do
@@ -81,5 +84,49 @@ class ProjectsControllerTest < ActionController::TestCase
     end
   end
   
-
+  test "should update project" do
+    sign_in @user
+    project = @user.projects.sample
+    new_project_name = "my renamed project"
+    put :update, :id => project.id, :project => {:name => new_project_name }
+    
+    assert assigns(:project)
+    assert_redirected_to project_path(project)
+    assert_equal assigns(:project).name, new_project_name 
+  end
+  
+  test "should render edit form when project update fails" do
+    sign_in @user
+    project = @user.projects.sample
+    new_project_name = ''
+    
+    put :update, :id => project.id, :project => {:name => new_project_name }
+    
+    assert assigns(:project)
+    assert_template :edit
+    assert assigns(:project).errors.any?
+  end
+  
+  test "should delete a project" do
+    sign_in @user
+    project = @user.projects.sample
+    
+    assert_difference('Project.count', -1 ) do
+      delete :destroy, :id => project.id
+    end
+    
+    assert_redirected_to projects_path
+    assert_raise ActiveRecord::RecordNotFound do
+      Project.find(project.id)
+    end
+  end
+  
+  test "should not delete project when not owned by authenticated user" do
+    @user2 = User.create(:email => 'user2@user.com', :password => 'abc123', :password_confirmation => 'abc123')
+    sign_in @user2
+    
+    assert_raise ActiveRecord::RecordNotFound do
+      delete :destroy, :id => @user.projects.sample.id
+    end
+  end
 end
