@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     else
       respond_to do |format|
         format.html { render :action => 'new' }
-        format.js { render :status => 500 }
+        format.js { render :json => @task.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -28,7 +28,7 @@ class TasksController < ApplicationController
       flash.now[:notice] = 'task successfully updated'
       render :nothing => true
     else
-      format.js { render :status => 500 }
+      render :json => @task.errors, :status => :unprocessable_entity
     end
   end
  
