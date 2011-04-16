@@ -36,10 +36,35 @@ class ProjectsControllerTest < ActionController::TestCase
     end
   end
   
+  test "should show project" do
+    sign_in @user
+    get :show, :id => @user.projects.sample.id
+    
+    assert_response :success
+    assert assigns(:project)
+    assert_template 'show'
+    
+    assert_select 'h1', assigns(:project).name
+    assert_select '#new_task_link'
+  end
+  
+  test "should show task sorting" do
+    sign_in @user
+    get :show, :id => @user.projects.sample.id, :sort_tasks => 1
+    
+    assert_response :success
+    assert assigns(:project)
+    assert_template 'sort_tasks'
+    
+    assert_select 'ul.sortable'
+    assert_select 'a#done-reordering'
+  end
+  
   test "should get new project form" do 
     sign_in @user
     get :new
     assert_response :success
+    assert_template 'new'
     assert_select 'h1', 'New Project'
     assert_select 'form#new_project', 1  do
       assert_select 'input[type=text]#project_name', 1
