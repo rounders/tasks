@@ -25,7 +25,6 @@ class TasksControllerTest < ActionController::TestCase
     
     put :toggle_completed, :id => @project.tasks.sample.id, :format => 'html'
     assert_redirected_to new_user_session_path
-    
   end
   
   # test GET /new
@@ -61,6 +60,19 @@ class TasksControllerTest < ActionController::TestCase
     assert_template "create"
   end
   
+  test "should not create a blank task" do
+    sign_in @user
+    post :create, :project_id => @project, :task => { :description => '' }
+    
+    assert_response :success
+    assert_template 'new'
+    assert assigns(:project)
+    assert assigns(:task)
+    
+    post :create, :project_id => @project, :task => { :description => '' }, :format => 'js'
+    assert_response :unprocessable_entity
+  end
+  
   test "should update an existing task" do
     sign_in @user
     task = @project.tasks.sample
@@ -71,6 +83,17 @@ class TasksControllerTest < ActionController::TestCase
     assert assigns(:task)
     assert_equal assigns(:task).description, "blah blah"
     assert_equal flash[:notice], "task successfully updated"
+  end
+  
+  test "updating an existing task with invalid data should fail" do
+    sign_in @user
+    task = @project.tasks.sample
+    
+    put :update, :format => 'js', :project_id => @project, :id => task.id, :task => { :description => '' }
+    assert_response :unprocessable_entity
+    
+    put :update, :format => 'html', :project_id => @project, :id => task.id, :task => { :description => '' }
+    assert_response :unprocessable_entity
   end
   
   test "should not update a task which does not belong to us" do
