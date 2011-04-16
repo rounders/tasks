@@ -8,7 +8,7 @@ namespace :coverage do
   end
  
   def display_coverage
-    system("sensible-browser test/coverage/index.html")
+    system("open test/coverage/index.html")
   end
  
   desc 'Measures unit test coverage'
