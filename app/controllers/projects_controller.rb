@@ -42,8 +42,6 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.find(params[:id])
     if @project.destroy
       flash[:notice] = "Project #{@project.name} has been sent to the garbage can."
-    else
-      flash[:notice] = "I could not delete the thing for some reason"
     end
     redirect_to projects_path
   end
