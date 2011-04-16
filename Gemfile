@@ -35,4 +35,5 @@ gem 'ranked-model', '0.0.2'
 group :development do
   gem 'hirb'
   gem 'wirble'
+  gem 'rcov'
 end
