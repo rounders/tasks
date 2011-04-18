@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(params[:project])
     if @project.save
-      redirect_to @project
+      redirect_to project_path(@project, :show_task_form => true)
     else
       render :action => 'new'
     end

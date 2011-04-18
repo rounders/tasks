@@ -1,10 +1,11 @@
 <div id="nav">
-	<%= link_to 'My Projects', projects_path, :id => 'my-projects-link' %>
-	this project: <%= link_to 'edit', edit_project_path(@project) %> |
-	<%= link_to 'reorder', sort_tasks_path(@project) %>
+	<h1><%= @project.name %></h1>
+	<%= link_to 'edit', edit_project_path(@project) %> |
+	<%= link_to 'reorder', sort_tasks_path(@project) %> |
+	<%= link_to 'all projects', projects_path %>
 </div>	
 
-<h1><%= @project.name %></h1>
+
 
 <div id="active_tasks">
 	<%= render :partial => "active_tasks" %>
@@ -15,7 +16,7 @@
 		<%= link_to 'add a new task', new_project_task_path(@project), :id => 'new_task_link' %> 
 		<span id="delete-project">or <%= link_to 'delete this project', @project, :method => :delete, :confirm => 'Are you sure?' %></span>
 	</p>
-	<div id="new_task_form" style="display:none;">
+	<div id="new_task_form" style="display:none" data-show-form="<%= params[:show_task_form] ? 1 : 0 %>">
 		<%= render :template => '/tasks/new', :layout => nil %>
 	</div>	
 </div>

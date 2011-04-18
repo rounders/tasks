@@ -70,6 +70,10 @@ $(function () {
 
 	
 	toggle_delete_project_link();
+	if ($('#new_task_form').attr('data-show-form') == "1") {
+		$('#new_task_link').click();
+	} 
+	
 });
 
 function toggle_delete_project_link() {
