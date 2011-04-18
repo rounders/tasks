@@ -1,10 +1,11 @@
 <div id="nav">
-	<%= link_to 'Projects', projects_path, :id => 'my-projects-link' %>
-	this project: <%= link_to 'edit', edit_project_path(@project) %> |
-	<%= link_to "I'm done reordering", @project, :id => 'done-reordering' %>
-</div>	
+	<h1><%= @project.name %></h1>
+	<%= link_to 'edit', edit_project_path(@project) %> |
+	<%= link_to "I'm done reordering", @project, :id => 'done-reordering' %> |
+	<%= link_to 'all projects', projects_path %>
+</div>
 
-<h1><%= @project.name %></h1>
+
 
 <%= render :partial => "active_tasks" %>
 
