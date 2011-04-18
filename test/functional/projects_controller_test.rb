@@ -78,7 +78,7 @@ class ProjectsControllerTest < ActionController::TestCase
     end
     
     assert assigns(:project)
-    assert_redirected_to assigns(:project)
+    assert_redirected_to project_path(assigns(:project), :show_task_form => true)
   end
   
   test "should display errors when trying to create a duplicate project for a given user" do

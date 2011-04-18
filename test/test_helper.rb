@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'capybara/rails'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -15,5 +16,16 @@ class ActiveSupport::TestCase
   class ActionController::TestCase
     include Devise::TestHelpers
   end
- 
+end
+
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  
+  def sign_in(email,password)
+    visit '/'
+    page.fill_in 'user_email', :with => email
+    page.fill_in 'user_password', :with => password
+    page.click_button('Sign in')
+
+  end
 end
