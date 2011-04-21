@@ -38,12 +38,12 @@ li {
 	vertical-align: top;
 }
 
-#completed_tasks li {
+#completed-tasks li {
 	color: #999;
 }
 
 #nav {
-	max-width: 400px;
+
 	min-width: 300px;
 	padding: 15px 10px 15px 10px;
 /*	border-bottom: 1px dotted gray;*/
