@@ -23,6 +23,9 @@ end
 
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
+  
+  # this is necessary when using the Capybara selenium driver
+  # see https://groups.google.com/forum/#!msg/ruby-capybara/JI6JrirL9gM/R6YiXj4gi_UJ
   self.use_transactional_fixtures = false
   def sign_in(email,password)
     visit '/'
