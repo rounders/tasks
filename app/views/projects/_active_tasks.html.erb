@@ -3,8 +3,10 @@
 	<%= content_tag_for(:li, task) do %>
 		<% if params[:sort_tasks] -%>
 			<%= image_tag 'drag.gif', :class => 'handle' -%>
-		<% end -%>
-		<%= check_box_tag 'completed_tasks[]', task.id, false, :id => "activetask-#{task.id}" %> <span class="description"><%= task.description %></span>
+		<% else -%>
+		<%= check_box_tag 'completed_tasks[]', task.id, false, :id => "activetask-#{task.id}" %> 
+		<% end %>
+		<span class="description"><%= task.description %></span>
 
 		
     <% end %>
