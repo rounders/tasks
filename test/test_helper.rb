@@ -2,6 +2,9 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -20,7 +23,7 @@ end
 
 class ActionDispatch::IntegrationTest
   include Capybara::DSL
-  
+  self.use_transactional_fixtures = false
   def sign_in(email,password)
     visit '/'
     page.fill_in 'user_email', :with => email

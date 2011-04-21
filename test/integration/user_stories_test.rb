@@ -20,6 +20,10 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
       @project.tasks.create(:description => "Task #{i}")
     end  
   end
+  
+  def teardown
+    DatabaseCleaner.clean
+  end
 
   # Replace this with your real tests.
   test "a user should be able to sign in" do
@@ -67,7 +71,83 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
   end
   
   test "adding a task to a project" do
+    Capybara.current_driver = :selenium
+    
+    sign_in('user@user.com', 'abc123')
+    page.click_link(@project.name)
+    assert !page.find_by_id('task_description').visible?
+    page.click_link('add a new task')
+
+    assert page.find_by_id('task_description').visible?
+    page.fill_in 'task_description', :with => 'my new task'
+    page.click_button('Add this task')
+    
+    assert page.has_selector?('ul#active-tasks-list li:last-child span', :text => 'my new task')
+
+    page.click_link('close')
+    assert !page.find_by_id('new_task_form').visible?
+    
+    Capybara.use_default_driver
   end
+  
+  test "completing a task" do
+    Capybara.current_driver = :selenium
+    
+    sign_in('user@user.com', 'abc123')
+    page.click_link(@project.name)
+    
+    random_task = @project.tasks.sample
+    assert page.has_selector?('ul#active-tasks-list li span', :text => random_task.description)
+
+    page.check("activetask-#{random_task.id}")
+    assert page.has_selector?('div#completed-tasks ul li span', :text => random_task.description)
+    
+    page.uncheck("completedtask-#{random_task.id}")
+    assert page.has_selector?('ul#active-tasks-list li span', :text => random_task.description)
+    
+    Capybara.use_default_driver
+  end
+  
+  test "reordering tasks" do
+    Capybara.current_driver = :selenium
+    
+    sign_in('user@user.com','abc123')
+    page.click_link(@project.name)
+    
+    page.click_link('reorder')
+    
+    # there appears to be no easy way to do this using selenium
+    Capybara.use_default_driver
+  end
+  
+  test "editing a project" do
+    Capybara.current_driver = :selenium
+    
+    sign_in('user@user.com','abc123')
+    
+    page.click_link(@project.name)
+    
+    page.click_link('edit')
+    
+    assert_equal current_path, edit_project_path(@project)
+    
+    assert page.has_selector?('h2', :text => 'Edit')
+    # assert page_has_selector?('project_name', :with => @project.name )
+    assert find('#project_name')
+    page.fill_in 'project_name', :with => 'This is a new name'
+
+    random_task = @project.tasks.sample
+    page.find("#task_#{random_task.id} a").click
+    page.click_button('Update Project')
+    
+    assert page.has_selector?('h1', :text => 'This is a new name')
+    assert !page.has_selector?('ul#active-tasks-list li span', :text => random_task.description)
+    # save_and_open_page
+    
+    Capybara.use_default_driver    
+  end
+  
+  
   
   
 end
