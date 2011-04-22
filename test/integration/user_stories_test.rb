@@ -124,19 +124,15 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
     Capybara.current_driver = :selenium
     
     sign_in('user@user.com','abc123')
-    
     page.click_link(@project.name)
     
     page.click_link('edit')
-    
     assert_equal current_path, edit_project_path(@project)
-    
     assert page.has_selector?('h2', :text => 'Edit')
-    # assert page_has_selector?('project_name', :with => @project.name )
-    assert find('#project_name')
-    page.fill_in 'project_name', :with => 'This is a new name'
 
+    page.fill_in 'project_name', :with => 'This is a new name'
     random_task = @project.tasks.sample
+
     page.find("#task_#{random_task.id} a").click
     page.click_button('Update Project')
     
