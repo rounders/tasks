@@ -36,7 +36,7 @@ group :development, :test do
   gem 'hirb'
   gem 'wirble'
   gem 'rcov'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  gem 'rb-fsevent'
   gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'database_cleaner'
   gem 'launchy'
