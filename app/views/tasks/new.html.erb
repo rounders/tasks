@@ -1,6 +1,6 @@
 <%= form_for [@project,Task.new], :remote => true do |f| %>
 <p>
-	<%= f.label :description  %>
+	<%= f.label :description, "Task"  %>
 	<%= f.text_field :description, :size => 60 %>
 </p>	
 
