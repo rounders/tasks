@@ -32,14 +32,15 @@ gem 'ranked-model', '0.0.2'
 # group :development, :test do
 #   gem 'webrat'
 # end
-group :development do
+group :development, :test do
   gem 'hirb'
   gem 'wirble'
   gem 'rcov'
-end
-
-group :test do
+  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
   gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'guard-livereload'
+  # gem 'guard-test'
 end
+
