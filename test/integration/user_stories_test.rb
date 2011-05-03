@@ -86,8 +86,6 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
 
     page.click_link('close')
     assert !page.find_by_id('new_task_form').visible?
-    
-    Capybara.use_default_driver
   end
   
   test "completing a task" do
@@ -104,20 +102,34 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
     
     page.uncheck("completedtask-#{random_task.id}")
     assert page.has_selector?('ul#active-tasks-list li span', :text => random_task.description)
-    
-    Capybara.use_default_driver
   end
   
   test "reordering tasks" do
     Capybara.current_driver = :selenium
+
+    last_task = @project.tasks.active.last
+    assert_not_equal last_task.description, @project.tasks.active.first.description
     
     sign_in('user@user.com','abc123')
     page.click_link(@project.name)
     
     page.click_link('reorder')
     
-    # there appears to be no easy way to do this using selenium
-    Capybara.use_default_driver
+    # load jquery.simulate and then drag the last task to the first.
+    page.execute_script %Q{
+      $.getScript("/javascripts/jquery.simulate.js", function(){
+        number_of_tasks = $('.task img').length;
+      	first_child_y = $('.task:first img').offset().top;
+      	last_child_y  = $('.task:last img').offset().top;
+      	dy = first_child_y - last_child_y;
+
+      	last = $('.task:last img');
+      	last.simulate('drag', {dx:0, dy:dy});
+      });
+    }
+    assert page.has_selector?('ul#active-tasks-list li:first-child span', :text => last_task.description)
+
+    assert_equal @project.tasks.reload.active.first.description, last_task.description
   end
   
   test "editing a project" do
@@ -139,8 +151,6 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
     assert page.has_selector?('h1', :text => 'This is a new name')
     assert !page.has_selector?('ul#active-tasks-list li span', :text => random_task.description)
     # save_and_open_page
-    
-    Capybara.use_default_driver    
   end
   
   
