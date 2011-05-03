@@ -118,7 +118,6 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
     # load jquery.simulate and then drag the last task to the first.
     page.execute_script %Q{
       $.getScript("/javascripts/jquery.simulate.js", function(){
-        number_of_tasks = $('.task img').length;
       	first_child_y = $('.task:first img').offset().top;
       	last_child_y  = $('.task:last img').offset().top;
       	dy = first_child_y - last_child_y;
