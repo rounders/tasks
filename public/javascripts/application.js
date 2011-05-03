@@ -1,7 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-$('input[type=checkbox]').live('click', function () {
+$('ul.tasks input[type=checkbox]').live('click', function () {
 	task_id = this.value;
 
 	
