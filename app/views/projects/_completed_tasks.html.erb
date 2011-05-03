@@ -2,7 +2,7 @@
 <h4>Completed</h4>
 <% end %>
 
-<ul>
+<ul class="tasks">
 	<% for task in @project.tasks.completed %>
 	<li id="task_<%= task.id %>">
 		<%= check_box_tag 'completed_tasks[]', task.id, task.completed?, :id => "completedtask-#{task.id}" %> <span class="description"><%= task.description %></span>

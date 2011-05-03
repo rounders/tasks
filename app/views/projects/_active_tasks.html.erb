@@ -1,4 +1,4 @@
-<ul id="active-tasks-list" data-project-id="<%= @project.id %>" class="<%= params[:sort_tasks] ? 'sortable' : ''%>">
+<ul id="active-tasks-list" data-project-id="<%= @project.id %>" class="tasks <%= params[:sort_tasks] ? 'sortable' : ''%>">
 	<% for task in @project.tasks.active %>
 	<%= content_tag_for(:li, task) do %>
 		<% if params[:sort_tasks] -%>
