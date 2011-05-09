@@ -36,11 +36,12 @@ group :development, :test do
   gem 'hirb'
   gem 'wirble'
   gem 'rcov'
-  gem 'rb-fsevent'
   gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'guard-livereload'
+  gem 'mocha'
+  # gem 'rb-fsevent'
+  # gem 'guard-livereload'
   # gem 'guard-test'
 end
 
