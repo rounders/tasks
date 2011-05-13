@@ -47,5 +47,5 @@ Tasks::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
-  config.action_view.javascript_expansions[:defaults] = %w(http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js rails)
+  config.action_view.javascript_expansions[:defaults] = %w(http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js jquery_ujs)
 end
