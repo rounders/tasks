@@ -125,10 +125,43 @@ class UserStoriesTest < ActionDispatch::IntegrationTest
       	last = $('.task:last img');
       	last.simulate('drag', {dx:0, dy:dy});
       });
-    }
+    }      
+    
+    # verify that visually the sorting has occured   
     assert page.has_selector?('ul#active-tasks-list li:first-child span', :text => last_task.description)
-
+        
+    # verify that the sorting has actually occured in the database  
     assert_equal @project.tasks.reload.active.first.description, last_task.description
+  end
+  
+  test "reordering tasks part deux" do
+    Capybara.current_driver = :selenium
+
+    first_task = @project.tasks.active.first
+    assert_not_equal first_task.description, @project.tasks.active.last.description
+    
+    sign_in('user@user.com','abc123')
+    page.click_link(@project.name)
+    
+    page.click_link('reorder')
+    
+    # load jquery.simulate and then drag the first task to the last position.
+    page.execute_script %Q{
+      $.getScript("/javascripts/jquery.simulate.js", function(){ 
+        distance_between_elements = $('.task:nth-child(2) img').offset().top - $('.task:nth-child(1) img').offset().top;
+        height_of_elements = $('.task:nth-child(1) img').height();
+        dy = (distance_between_elements * ( $('.task').size() - 1 )) + height_of_elements/2;
+
+      	first = $('.task:first img');
+      	first.simulate('drag', {dx:0, dy:dy});
+      });
+    }
+    
+    # verify that visually the sorting has occured
+    assert page.has_selector?('ul#active-tasks-list li:last-child span', :text => first_task.description)
+                                                  
+    # verify that the sorting has actually occured in the database
+    assert_equal @project.tasks.reload.active.last.description, first_task.description
   end
   
   test "editing a project" do
