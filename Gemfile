@@ -6,9 +6,9 @@ gem 'rails', '3.0.6'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'jquery-rails'
-gem 'devise'
-gem 'ranked-model', '0.0.2'
+gem 'jquery-rails', '1.0.2'
+gem 'devise', '1.3.4'
+gem 'ranked-model', '0.0.3'
 
 # Use unicorn as the web server
 # gem 'unicorn'
